@@ -1,6 +1,7 @@
-extends PlayerControlState
+extends PlayerMotionState
 class_name PlayerIdleState
 
+export(NodePath) onready var animated_sprite = get_node(animated_sprite) as AnimatedSprite
 
 func enter():
 	animated_sprite.play("idle")
@@ -9,12 +10,5 @@ func enter():
 func execute(delta: float):
 	.execute(delta)
 	
-	var movement = poll_movement()
-	if movement.length_squared() > 0.0:
+	if movement_axis.length_squared() > 0.0:
 		_finish("move")
-
-	var shoot_dir = poll_shoot()
-	if shoot_dir.length_squared() > 0.0:
-		_heading = shoot_dir.normalized()
-		
-	_flip_sprite()

@@ -14,10 +14,6 @@ func execute(delta: float):
 	pass
 
 
-func handle_input(delta: float):
-	pass
-
-
 func enter():
 	pass
 

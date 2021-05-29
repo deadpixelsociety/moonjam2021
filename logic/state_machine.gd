@@ -43,7 +43,6 @@ func _process(delta):
 
 
 func _process_state(delta: float, state: State):
-	state.handle_input(delta)
 	state.execute(delta)
 
 
