@@ -6,8 +6,10 @@ signal health_changed
 
 export(int) var max_health = 5 setget _set_max_health
 
-var _health = 0
 var heading = Vector2(1.0, 0.0) setget _set_heading, _get_heading
+var path = PoolVector2Array()
+
+var _health = 0
 
 onready var _animated_sprite := $AnimatedSprite
 onready var _collision := $CollisionShape2D
@@ -18,9 +20,54 @@ onready var _revolver := $Revolver
 onready var _revolver_right := $RevolverRight
 onready var _revolver_left := $RevolvedLeft
 
+var _move_speed = 175.0
+var _velocity = Vector2.ZERO
+
 
 func _physics_process(delta):
-	pass
+	if path.size() > 0:
+		_move_along_path(delta)
+
+
+func _move_along_path(delta: float):
+	var start = position
+	for i in range(path.size()):
+		var dir = (path[0] - start).normalized()
+		
+		_velocity = dir * _move_speed
+		
+		var distance = _velocity.length()
+		if distance <= .01:
+			_velocity = Vector2.ZERO
+		
+		distance *= delta
+		
+		var distance_to_next = start.distance_to(path[0])
+		if distance <= distance_to_next and distance > 0.0:
+			_velocity = move_and_slide(_velocity)
+		elif distance > distance_to_next and distance > 0.0:
+			var tween = Tween.new()
+			tween.interpolate_property(
+				self,
+				"position",
+				null,
+				path[0],
+				0.25
+			)
+			
+			tween.start()
+			yield(tween, "tween_all_completed")
+			path.remove(0)
+		elif distance <= 0.0:
+			path.remove(0)
+		
+		if path.size() == 0:
+			break
+
+		start = position
+		distance_to_next = start.distance_to(path[0])
+		if distance_to_next <= 0.01:
+			path.remove(0)
 
 
 func _process(delta):
