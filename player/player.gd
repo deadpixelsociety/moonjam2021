@@ -54,7 +54,6 @@ func consume_health(amount: float):
 
 func _set_heading(value: Vector2):
 	heading = value
-	print("heading=" + str(heading))
 	_flip_sprite()
 
 
