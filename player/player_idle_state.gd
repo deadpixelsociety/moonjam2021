@@ -3,8 +3,8 @@ class_name PlayerIdleState
 
 export(NodePath) onready var animated_sprite = get_node(animated_sprite) as AnimatedSprite
 
-func enter():
-	animated_sprite.play("idle")
+func enter():		
+	animated_sprite.play("idle" + _get_animation_affix())
 
 
 func execute(delta: float):

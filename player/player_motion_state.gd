@@ -6,8 +6,6 @@ export(NodePath) onready var player = get_node(player) as Player
 
 var movement_axis = Vector2.ZERO
 
-var _heading = Vector2(1.0, 0.0)
-
 
 func execute(delta: float):
 	poll_movement()
@@ -29,7 +27,20 @@ func poll_movement():
 		)
 
 		if joy_dir.length() > move_deadzone:
-			movement_axis = Vector2(sign(joy_dir.x), sign(joy_dir.y))
+			movement_axis = joy_dir.normalized()
 		
 	if movement_axis.length_squared() > 0.0:
 		player.heading = movement_axis.normalized()
+
+
+func _get_animation_affix() -> String:
+	print(player.heading)
+	
+	var affix = "_side"
+	if abs(player.heading.y) > abs(player.heading.x):
+		if player.heading.y < 0.0:
+			affix = "_up"
+		elif player.heading.y > 0.0:
+			affix = "_down"
+		
+	return affix

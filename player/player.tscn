@@ -1,6 +1,6 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=19 format=2]
 
-[ext_resource path="res://assets/sprites/char_sprite.png" type="Texture" id=1]
+[ext_resource path="res://assets/sprites/benny_side.png" type="Texture" id=1]
 [ext_resource path="res://player/player.gd" type="Script" id=2]
 [ext_resource path="res://player/bullet.tscn" type="PackedScene" id=3]
 [ext_resource path="res://player/player_idle_state.gd" type="Script" id=4]
@@ -12,12 +12,54 @@
 [ext_resource path="res://assets/sprites/revolver.png" type="Texture" id=10]
 [ext_resource path="res://player/player_shoot_state.gd" type="Script" id=11]
 [ext_resource path="res://player/player_none_state.gd" type="Script" id=12]
+[ext_resource path="res://assets/sprites/benny_back.png" type="Texture" id=13]
+[ext_resource path="res://assets/sprites/benny_front.png" type="Texture" id=14]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
+"frames": [ ExtResource( 14 ) ],
+"loop": true,
+"name": "shoot_down",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 13 ) ],
+"loop": true,
+"name": "idle_up",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 13 ) ],
+"loop": true,
+"name": "move_up",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 1 ) ],
 "loop": true,
-"name": "idle",
+"name": "move_side",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 14 ) ],
+"loop": true,
+"name": "move_down",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 14 ) ],
+"loop": true,
+"name": "idle_down",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "idle_side",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 13 ) ],
+"loop": true,
+"name": "shoot_up",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "shoot_side",
 "speed": 5.0
 } ]
 
@@ -80,6 +122,20 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Color( 1, 0, 0, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 0 ) ]
 }
+tracks/4/type = "method"
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 1.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "spawn_drone"
+} ]
+}
 
 [node name="Player" type="KinematicBody2D"]
 collision_mask = 10
@@ -124,13 +180,14 @@ state_name = "shoot"
 player = NodePath("../..")
 bullet_cooldown = 0.01
 Bullet = ExtResource( 3 )
+animated_sprite = NodePath("../../AnimatedSprite")
 shoot_origin = NodePath("../../Revolver/BulletSpawn")
 revolver = NodePath("../../Revolver")
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -14 )
 frames = SubResource( 1 )
-animation = "idle"
+animation = "shoot_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -12 )
@@ -160,6 +217,13 @@ position = Vector2( 17, -14 )
 texture = SubResource( 3 )
 hframes = 34
 script = ExtResource( 8 )
+drone_container = NodePath("../DroneContainer")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="BloodPrinter"]
 anims/print = SubResource( 4 )
+
+[node name="DroneSpawn" type="Node2D" parent="BloodPrinter"]
+position = Vector2( 2, 14 )
+
+[node name="DroneContainer" type="Node2D" parent="."]
+position = Vector2( 0, -11 )

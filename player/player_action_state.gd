@@ -14,7 +14,10 @@ func _input(event):
 		if event.button_index == BUTTON_LEFT:
 			_mouse_shooting = event.pressed
 			if event.pressed:
+				player.shooting = true
 				poll_shoot()
+			else:
+				player.shooting = false
 
 
 func execute(delta: float):
@@ -36,9 +39,22 @@ func poll_shoot():
 		)
 		
 		if shoot_axis.length() < shoot_deadzone:
+			player.shooting = false
 			shoot_axis = Vector2.ZERO
 		else:
+			player.shooting = true
 			shoot_axis = shoot_axis.normalized()
 
 	if shoot_axis.length_squared() > 0.0:
 		player.heading = shoot_axis
+
+
+func _get_animation_affix() -> String:
+	var affix = "_side"
+	if abs(player.heading.y) > abs(player.heading.x):
+		if player.heading.y < 0.0:
+			affix = "_up"
+		elif player.heading.y > 0.0:
+			affix = "_down"
+		
+	return affix
