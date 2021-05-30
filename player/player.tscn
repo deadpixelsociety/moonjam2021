@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://assets/sprites/benny_side.png" type="Texture" id=1]
 [ext_resource path="res://player/player.gd" type="Script" id=2]
@@ -14,12 +14,19 @@
 [ext_resource path="res://player/player_none_state.gd" type="Script" id=12]
 [ext_resource path="res://assets/sprites/benny_back.png" type="Texture" id=13]
 [ext_resource path="res://assets/sprites/benny_front.png" type="Texture" id=14]
+[ext_resource path="res://player/drone_container.gd" type="Script" id=15]
+[ext_resource path="res://player/drone_attachment.gd" type="Script" id=16]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 14 ) ],
+"frames": [ ExtResource( 1 ) ],
 "loop": true,
-"name": "shoot_down",
+"name": "move_side",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "shoot_side",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 13 ) ],
@@ -32,19 +39,9 @@ animations = [ {
 "name": "move_up",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 1 ) ],
-"loop": true,
-"name": "move_side",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 14 ) ],
 "loop": true,
 "name": "move_down",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 14 ) ],
-"loop": true,
-"name": "idle_down",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 1 ) ],
@@ -52,14 +49,19 @@ animations = [ {
 "name": "idle_side",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 14 ) ],
+"loop": true,
+"name": "shoot_down",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 13 ) ],
 "loop": true,
 "name": "shoot_up",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 1 ) ],
+"frames": [ ExtResource( 14 ) ],
 "loop": true,
-"name": "shoot_side",
+"name": "idle_down",
 "speed": 5.0
 } ]
 
@@ -96,7 +98,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 1, 2, 3.4 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 17, -14 ), Vector2( 17, -12 ), Vector2( 17, -15 ), Vector2( 17, -14 ) ]
+"values": [ Vector2( 18, 3 ), Vector2( 18, 1 ), Vector2( 18, 5 ), Vector2( 18, 3 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath(".:visible")
@@ -185,12 +187,12 @@ shoot_origin = NodePath("../../Revolver/BulletSpawn")
 revolver = NodePath("../../Revolver")
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( 0, -14 )
 frames = SubResource( 1 )
 animation = "shoot_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -12 )
+visible = false
+position = Vector2( 0, 3 )
 rotation = -1.5708
 shape = SubResource( 2 )
 
@@ -198,7 +200,7 @@ shape = SubResource( 2 )
 current = true
 
 [node name="Revolver" type="Sprite" parent="."]
-position = Vector2( 10, -10 )
+position = Vector2( -8, 7 )
 texture = ExtResource( 10 )
 flip_h = true
 
@@ -206,14 +208,50 @@ flip_h = true
 position = Vector2( 6, -1 )
 
 [node name="RevolverRight" type="Node2D" parent="."]
-position = Vector2( 10, -10 )
+position = Vector2( -8, 7 )
 
 [node name="RevolvedLeft" type="Node2D" parent="."]
-position = Vector2( -10, -10 )
+position = Vector2( -10, 7 )
+
+[node name="DroneContainer" type="Node2D" parent="."]
+script = ExtResource( 15 )
+spin_speed = 0.002
+
+[node name="Drone1" type="Node2D" parent="DroneContainer"]
+position = Vector2( 0, 28 )
+script = ExtResource( 16 )
+
+[node name="Drone2" type="Node2D" parent="DroneContainer"]
+position = Vector2( 28, 0 )
+script = ExtResource( 16 )
+
+[node name="Drone3" type="Node2D" parent="DroneContainer"]
+position = Vector2( -28, 0 )
+script = ExtResource( 16 )
+
+[node name="Drone4" type="Node2D" parent="DroneContainer"]
+position = Vector2( 0, -28 )
+script = ExtResource( 16 )
+
+[node name="Drone5" type="Node2D" parent="DroneContainer"]
+position = Vector2( 20, -20 )
+script = ExtResource( 16 )
+
+[node name="Drone6" type="Node2D" parent="DroneContainer"]
+position = Vector2( 20, 20 )
+script = ExtResource( 16 )
+
+[node name="Drone7" type="Node2D" parent="DroneContainer"]
+position = Vector2( -20, 20 )
+script = ExtResource( 16 )
+
+[node name="Drone8" type="Node2D" parent="DroneContainer"]
+position = Vector2( -20, -20 )
+script = ExtResource( 16 )
 
 [node name="BloodPrinter" type="Sprite" parent="."]
 self_modulate = Color( 1, 0, 0, 0 )
-position = Vector2( 17, -14 )
+position = Vector2( 18, 3 )
 texture = SubResource( 3 )
 hframes = 34
 script = ExtResource( 8 )
@@ -224,6 +262,3 @@ anims/print = SubResource( 4 )
 
 [node name="DroneSpawn" type="Node2D" parent="BloodPrinter"]
 position = Vector2( 2, 14 )
-
-[node name="DroneContainer" type="Node2D" parent="."]
-position = Vector2( 0, -11 )

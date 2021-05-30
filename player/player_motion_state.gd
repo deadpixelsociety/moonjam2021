@@ -10,7 +10,7 @@ var movement_axis = Vector2.ZERO
 func execute(delta: float):
 	poll_movement()
 	
-	if Input.is_action_just_pressed("print_drone"):
+	if player.can_attach_drone() and Input.is_action_just_pressed("print_drone"):
 		_request_state("print")
 
 

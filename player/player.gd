@@ -11,7 +11,7 @@ var path = PoolVector2Array()
 var shooting = false
 var moving = false
 
-var _health = 0
+var _health = 5
 
 onready var _animated_sprite := $AnimatedSprite
 onready var _collision := $CollisionShape2D
@@ -21,6 +21,7 @@ onready var _action_state_machine := $ActionStateMachine
 onready var _revolver := $Revolver
 onready var _revolver_right := $RevolverRight
 onready var _revolver_left := $RevolvedLeft
+onready var _drone_container := $DroneContainer
 
 var _move_speed = 175.0
 var _velocity = Vector2.ZERO
@@ -29,6 +30,11 @@ var _velocity = Vector2.ZERO
 func _physics_process(delta):
 	if path.size() > 0:
 		_move_along_path(delta)
+		
+	if abs(heading.y) > abs(heading.x) and heading.y < 0.0:
+		_revolver.z_index = -1
+	else:
+		_revolver.z_index = 0
 
 
 func _move_along_path(delta: float):
@@ -60,6 +66,14 @@ func _move_along_path(delta: float):
 
 func _process(delta):
 	pass
+
+
+func can_attach_drone() -> bool:
+	if _health <= 1:
+		return false
+		
+	var attachment = _drone_container.get_free_attachment()
+	return attachment != null
 
 
 func _died():
