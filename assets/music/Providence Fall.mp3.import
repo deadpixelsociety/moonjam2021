@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Providence Fall.mp3-b1bf5663ffadeda879afc04760db50e3.mp3str"
+
+[deps]
+
+source_file="res://assets/music/Providence Fall.mp3"
+dest_files=[ "res://.import/Providence Fall.mp3-b1bf5663ffadeda879afc04760db50e3.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

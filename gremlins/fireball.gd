@@ -2,9 +2,10 @@ extends Area2D
 class_name Fireball
 
 export(float) var damage = 1.0
-const MOVE_SPEED = 200.0
+const MOVE_SPEED = 150.0
 
 var _heading = Vector2.ZERO
+var dead = false
 
 
 func _physics_process(delta):
@@ -19,11 +20,13 @@ func fire(heading: Vector2):
 
 
 func _on_Fireball_body_entered(body):
+	dead = true
 	visible = false
 	queue_free()
 
 
 func _on_Fireball_area_entered(area):
+	dead = true
 	visible = false
 	queue_free()
 

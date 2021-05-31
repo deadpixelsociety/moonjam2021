@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/amplify.mp3-61c2c218750a2da0581c7a43acca022e.mp3str"
+
+[deps]
+
+source_file="res://assets/music/amplify.mp3"
+dest_files=[ "res://.import/amplify.mp3-61c2c218750a2da0581c7a43acca022e.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

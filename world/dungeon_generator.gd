@@ -9,14 +9,16 @@ const MEDIUM_RECTANGLE = "medium_rectangle"
 const LARGE_SQUARE = "large_square"
 const LARGE_RECTANGLE = "large_rectangle"
 
+export(int) var max_gremlins = 200
+export(float) var gremlin_coverage = 0.2
 export(int) var room_count = 100
 export(int) var max_separation_iterations = 100
 export(float) var key_room_percentage = 0.5
-export(bool) var debug = true
-export(bool) var generate = true setget _set_generate, _get_generate
-export(bool) var draw_triangulation = true
-export(bool) var draw_mst = true
-export(bool) var draw_hallways = true
+export(bool) var debug = false
+export(bool) var generate = false setget _set_generate, _get_generate
+export(bool) var draw_triangulation = false
+export(bool) var draw_mst = false
+export(bool) var draw_hallways = false
 export(NodePath) var tile_map
 
 var _spawn_radius = 25.0
@@ -28,12 +30,13 @@ var _key_edges = []
 var _mst = []
 var _hallways = []
 var _extents = Rect2(0.0, 0.0, 1.0, 1.0)
+var _open_tiles = []
 var _size_map = {
 	SMALL_SQUARE : Vector2(4.0, 4.0),
 	SMALL_RECTANGLE : Vector2(5.0, 3.0),
 	MEDIUM_SQUARE : Vector2(6.0, 6.0),
 	MEDIUM_RECTANGLE : Vector2(7.0, 4.0),
-	LARGE_SQUARE : Vector2(8.0, 8.0),
+	LARGE_SQUARE : Vector2(6.0, 6.0),
 	LARGE_RECTANGLE : Vector2(9.0, 6.0),
 }
 
@@ -100,6 +103,16 @@ var _room_chunks = {
 		
 	],
 }
+var _gremlins = [
+	load("res://gremlins/green_gremlin.tscn"),
+	load("res://gremlins/green_gremlin.tscn"),
+	load("res://gremlins/green_gremlin.tscn"),
+	load("res://gremlins/green_gremlin.tscn"),
+	load("res://gremlins/blue_gremlin.tscn"),
+	load("res://gremlins/blue_gremlin.tscn"),
+	load("res://gremlins/pink_gremlin.tscn"),
+	load("res://gremlins/pink_gremlin.tscn"),
+]
 
 onready var _tile_map := get_node(tile_map) as TileMap
 
@@ -161,9 +174,29 @@ func generate(num_rooms: int):
 	
 	if tile_map:
 		_render_tiles()
+		_spawn_gremlins()
 	
 	if debug:
 		debug_render()
+
+
+func _spawn_gremlins():
+	var gremlin_count = min(max_gremlins, _open_tiles.size())	
+	gremlin_count *= gremlin_coverage
+	if gremlin_count == 0:
+		return
+
+	var entities = owner.find_node("Entities", true, false) as YSort
+	if not entities:
+		return
+		
+	for i in range(gremlin_count):
+		var pos = _open_tiles[randi() % _open_tiles.size()]
+		_open_tiles.erase(pos)
+		var gremlin_type = _gremlins[randi() % _gremlins.size()] as PackedScene
+		var gremlin = gremlin_type.instance() as Gremlin
+		gremlin.global_position = pos
+		entities.add_child(gremlin)
 
 
 func _sort_nodes(a: Vector2, b: Vector2) -> bool:
@@ -172,8 +205,24 @@ func _sort_nodes(a: Vector2, b: Vector2) -> bool:
 
 func _reset():
 	_room_cells.clear()
+	_key_rooms.clear()
+	_non_key_rooms.clear()
+	_key_graph = PoolVector2Array()
+	_key_edges.clear()
+	_mst.clear()
+	_hallways.clear()
+	_extents = Rect2(0.0, 0.0, 1.0, 1.0)
+	_open_tiles.clear()
+
 	for child in get_children():
 		child.queue_free()
+	
+	if owner:
+		var entities = owner.find_node("Entities", true, false) as YSort
+		if entities:
+			for child in entities.get_children():
+				child.queue_free()
+
 
 
 func _create_cells(num_rooms: int):
@@ -426,7 +475,7 @@ func debug_render():
 func _set_generate(value: bool):
 	generate = value
 	if generate:
-		generate(room_count)
+		generate_dungeon()
 
 
 func _get_generate():
@@ -463,6 +512,11 @@ func _render_tiles():
 
 
 func _render_chunks():
+	var tileX = _tile_map.cell_size.x
+	var tileY = _tile_map.cell_size.y
+	var halfX = tileX * 0.5
+	var halfY = tileY * 0.5
+	
 	for z in range(_key_rooms.size()):
 		var first_room = z == 0
 		var second_room = z == 1
@@ -488,28 +542,47 @@ func _render_chunks():
 		var x = floor(room_cell.bounds.position.x)
 		var y = floor(room_cell.bounds.position.y)
 
+		var _spawn_point: Node2D = null
 		if first_room and player_spawn:
-			var _spawn_point = owner.find_node("PlayerSpawn", true, false) as Node2D
+			_spawn_point = owner.find_node("PlayerSpawn", true, false) as Node2D
 			if _spawn_point:			
-				_spawn_point.position = Vector2(x * _tile_map.cell_size.x, y * _tile_map.cell_size.y) + player_spawn.position
+				_spawn_point.global_position = Vector2(x * tileX, y * tileY) + player_spawn.global_position
 
 		if last_room and stairs_spawn:
 			var _stairs_point = owner.find_node("StairsSpawn", true, false) as Node2D
 			if _stairs_point:
-				_stairs_point.position = Vector2(x * _tile_map.cell_size.x, y * _tile_map.cell_size.y) + stairs_spawn.position	
+				_stairs_point.global_position = Vector2(x * tileX, y * tileY) + stairs_spawn.global_position
 		
 		for i in range(x, x + floor(room_cell.bounds.size.x)):
 			for j in range(y + floor(room_cell.bounds.size.y), y - 1, -1):
+				var globalX = i * tileX + halfX
+				var globalY = j * tileY + halfY
+				var globalVec = Vector2(globalX, globalY)
+				var too_close = false
+				
+				if _spawn_point:
+					too_close = globalVec.distance_to(_spawn_point.global_position) <= 300.0
+				
 				if chunk_map:
-					_tile_map.set_cell(i, j, chunk_map.get_cell(i - x, j - y))
+					var val = chunk_map.get_cell(i - x, j - y)
+					_tile_map.set_cell(i, j, val)
+					if val != -1 and not too_close:
+						_open_tiles.push_back(globalVec)
 				else:
 					_tile_map.set_cell(i, j, 0)
+					if not too_close:
+						_open_tiles.push_back(globalVec)
 
 	_tile_map.update_bitmask_region()
 	_tile_map.update_dirty_quadrants()
 
 
 func _render_hallways():
+	var tileX = _tile_map.cell_size.x
+	var tileY = _tile_map.cell_size.y
+	var halfX = tileX * 0.5
+	var halfY = tileY * 0.5
+
 	for _hallway in _hallways:
 		var hallway = _hallway as Edge
 		var xdiff = abs(hallway.end.x - hallway.start.x)
@@ -519,14 +592,20 @@ func _render_hallways():
 			var dir = sign(hallway.end.x - hallway.start.x)
 			for i in range(floor(hallway.start.x), floor(hallway.end.x) + dir, dir):
 				_dig_hallway(i, floor(hallway.start.y))
-				_dig_hallway(i, floor(hallway.start.y) + 1)
 				_dig_hallway(i, floor(hallway.start.y) - 1)
+				_open_tiles.push_back(Vector2(i * tileX + halfX, floor(hallway.start.y) * tileY + halfY))
+				_open_tiles.push_back(Vector2(i * tileX + halfX, (floor(hallway.start.y) - 1) * tileY + halfY))
+				#uncomment for 3 wide
+				#_dig_hallway(i, floor(hallway.start.y) + 1)
 		else:
 			var dir = sign(hallway.end.y - hallway.start.y)
 			for j in range(floor(hallway.start.y), floor(hallway.end.y) + dir, dir):
 				_dig_hallway(floor(hallway.start.x), j)
-				_dig_hallway(floor(hallway.start.x) + 1, j)
 				_dig_hallway(floor(hallway.start.x) - 1, j)
+				_open_tiles.push_back(Vector2(floor(hallway.start.x) * tileX + halfX, j * tileY + halfY))
+				_open_tiles.push_back(Vector2((floor(hallway.start.x) - 1) * tileX + halfX, j * tileY + halfY))
+				#uncomment for 3 wide
+				#_dig_hallway(floor(hallway.start.x) + 1, j)
 
 	_tile_map.update_bitmask_region()
 	_tile_map.update_dirty_quadrants()

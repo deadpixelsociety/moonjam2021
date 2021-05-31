@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/cargo.mp3-85a59b8b70d2a48cb16104cb09598cb1.mp3str"
+
+[deps]
+
+source_file="res://assets/music/cargo.mp3"
+dest_files=[ "res://.import/cargo.mp3-85a59b8b70d2a48cb16104cb09598cb1.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

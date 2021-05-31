@@ -99,6 +99,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://player/drones/grenade_shoot.gd"
 }, {
+"base": "TextureRect",
+"class": "GuideArrow",
+"language": "GDScript",
+"path": "res://ui/guide_arrow.gd"
+}, {
 "base": "HBoxContainer",
 "class": "HealthContainer",
 "language": "GDScript",
@@ -118,6 +123,11 @@ _global_script_classes=[ {
 "class": "KraftSingles",
 "language": "GDScript",
 "path": "res://pickups/kraft_singles.gd"
+}, {
+"base": "Control",
+"class": "MenuScreen",
+"language": "GDScript",
+"path": "res://ui/menu_screen.gd"
 }, {
 "base": "State",
 "class": "NoneState",
@@ -164,7 +174,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://player/player_shoot_state.gd"
 }, {
-"base": "State",
+"base": "PlayerActionState",
 "class": "PrintState",
 "language": "GDScript",
 "path": "res://player/print_state.gd"
@@ -253,10 +263,12 @@ _global_script_class_icons={
 "Grenade": "",
 "GrenadeDrone": "",
 "GrenadeShoot": "",
+"GuideArrow": "",
 "HealthContainer": "",
 "HealthPack": "",
 "KnockbackState": "",
 "KraftSingles": "",
+"MenuScreen": "",
 "NoneState": "",
 "Player": "",
 "PlayerActionState": "",
@@ -285,7 +297,7 @@ _global_script_class_icons={
 [application]
 
 config/name="MoonJam 2021"
-run/main_scene="res://world/start_room.tscn"
+run/main_scene="res://ui/menu_screen.tscn"
 config/icon="res://icon.png"
 
 [autoload]
@@ -293,6 +305,8 @@ config/icon="res://icon.png"
 GameEvents="*res://game_events.gd"
 LoreManager="*res://pickups/lore_manager.gd"
 PlayerStorage="*res://world/player_storage.gd"
+MusicManager="*res://world/music_manager.gd"
+LevelManager="*res://world/level_manager.gd"
 
 [display]
 
@@ -300,7 +314,7 @@ window/size/width=640
 window/size/height=360
 window/size/test_width=1280
 window/size/test_height=720
-mouse_cursor/custom_image="res://assets/sprites/cursor.png"
+mouse_cursor/custom_image="res://sprites/cursor.png"
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 

@@ -1,0 +1,309 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://sprites/menu_screen.png" type="Texture" id=1]
+[ext_resource path="res://sprites/blankbutton.png" type="Texture" id=2]
+[ext_resource path="res://sprites/pressed_button.png" type="Texture" id=3]
+[ext_resource path="res://sprites/highlight_button.png" type="Texture" id=4]
+[ext_resource path="res://assets/fonts/type_writer.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://ui/menu_screen.gd" type="Script" id=6]
+[ext_resource path="res://assets/music/Providence Fall.mp3" type="AudioStream" id=7]
+[ext_resource path="res://assets/sounds/synopsis.wav" type="AudioStream" id=8]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 8
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 8
+font_data = ExtResource( 5 )
+
+[sub_resource type="Theme" id=4]
+
+[node name="MenuScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonContainer" type="VBoxContainer" parent="."]
+margin_left = 142.0
+margin_top = 104.0
+margin_right = 270.0
+margin_bottom = 244.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="PlayGame" type="TextureButton" parent="ButtonContainer"]
+margin_right = 128.0
+margin_bottom = 32.0
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 3 )
+texture_hover = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ButtonContainer/PlayGame"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -50.0
+margin_top = -8.0
+margin_right = 50.0
+margin_bottom = 8.0
+custom_fonts/font = SubResource( 1 )
+text = "PLAY GAME"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="About" type="TextureButton" parent="ButtonContainer"]
+margin_top = 36.0
+margin_right = 128.0
+margin_bottom = 68.0
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 3 )
+texture_hover = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ButtonContainer/About"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -24.0
+margin_top = -8.0
+margin_right = 24.0
+margin_bottom = 8.0
+custom_fonts/font = SubResource( 1 )
+text = "HUH?"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WIN JAM" type="TextureButton" parent="ButtonContainer"]
+margin_top = 72.0
+margin_right = 128.0
+margin_bottom = 104.0
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 3 )
+texture_hover = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ButtonContainer/WIN JAM"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -54.0
+margin_top = -8.0
+margin_right = 54.0
+margin_bottom = 8.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.0431373, 0.713726, 0.415686, 1 )
+text = "$ WIN JAM $"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="QuitGame" type="TextureButton" parent="ButtonContainer"]
+margin_top = 108.0
+margin_right = 128.0
+margin_bottom = 140.0
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 3 )
+texture_hover = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ButtonContainer/QuitGame"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -50.0
+margin_top = -8.0
+margin_right = 50.0
+margin_bottom = 8.0
+custom_fonts/font = SubResource( 1 )
+text = "QUIT GAME"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -70.5
+margin_top = -16.0
+margin_right = 70.5
+margin_bottom = -8.0
+custom_fonts/font = SubResource( 2 )
+text = "GAMEPAD PREFERRED IN-GAME"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CreditsDialog" type="PopupDialog" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -31.0
+margin_top = -100.0
+margin_right = 101.0
+margin_bottom = 54.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="NinePatchRect" type="NinePatchRect" parent="CreditsDialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+patch_margin_left = 6
+patch_margin_top = 6
+patch_margin_right = 6
+patch_margin_bottom = 6
+
+[node name="Label" type="Label" parent="CreditsDialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 3 )
+text = "Art
+muffnbttn
+
+Sound
+ICWobbles
+
+Coding
+deadpixelsociety
+
+Thanks to Moon, 
+Erros and all 
+testers. <3"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AboutDialog" type="PopupDialog" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -243.0
+margin_top = -145.0
+margin_right = 243.0
+margin_bottom = 145.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="NinePatchRect" type="NinePatchRect" parent="AboutDialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+patch_margin_left = 6
+patch_margin_top = 6
+patch_margin_right = 6
+patch_margin_bottom = 6
+
+[node name="Label" type="Label" parent="AboutDialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 3 )
+text = "You are Benny Sparrow, lead security officer aboard the 
+flagship Providence, the pride and paragon of Planet America.
+
+You run a tight ship. But somehow you've been ambushed by 
+Space Gremlins, and they seem to know the location of your 
+SECRET WEAPON. The Cruotic Conversion Capsule--CoCC, for short--
+is your SECRET WEAPON. The prototype of a personal drone that 
+can turn blood into machines and back again. Meaning whoever 
+has the most blood is the strongest.
+
+And that's America, the planet with more blood than anybody.
+
+But now most of that precious American hemoglobin stains the 
+tiled floor of the Providence while Gremlins roam. They cannot, 
+under any circumstances, get their hands on your CoCC.
+
+Only America gets its hands on your CoCC. 
+
+Period."
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MenuMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+autoplay = true
+
+[node name="Label3" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -174.0
+margin_top = -27.0
+margin_right = -138.0
+margin_bottom = -19.0
+custom_fonts/font = SubResource( 2 )
+text = "VOLUME"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Volume" type="HSlider" parent="."]
+margin_left = 8.0
+margin_top = 340.0
+margin_right = 182.0
+margin_bottom = 356.0
+theme = SubResource( 4 )
+value = 90.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Synopsis" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+
+[connection signal="pressed" from="ButtonContainer/PlayGame" to="." method="_on_PlayGame_pressed"]
+[connection signal="pressed" from="ButtonContainer/About" to="." method="_on_About_pressed"]
+[connection signal="pressed" from="ButtonContainer/WIN JAM" to="." method="_on_WIN_JAM_pressed"]
+[connection signal="pressed" from="ButtonContainer/QuitGame" to="." method="_on_QuitGame_pressed"]
+[connection signal="popup_hide" from="AboutDialog" to="." method="_on_AboutDialog_popup_hide"]
+[connection signal="value_changed" from="Volume" to="." method="_on_Volume_value_changed"]

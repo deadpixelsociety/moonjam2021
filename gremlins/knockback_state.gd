@@ -1,13 +1,19 @@
 extends State
 class_name KnockbackState
 
+var _knockback_time = -1
 
 func enter():
-	yield(get_tree().create_timer(1.0), "timeout")
-	_finish()
+	_knockback_time = OS.get_ticks_msec()
 
 
 func execute(delta: float):
+	var now = OS.get_ticks_msec()
+	var diff = now - _knockback_time
+	if diff >= 1000.0:
+		_finish()
+		return
+		
 	var gremlin = owner as Gremlin
 	if gremlin:
 		gremlin.knockback *= 0.9

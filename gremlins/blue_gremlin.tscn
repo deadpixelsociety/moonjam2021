@@ -2,9 +2,9 @@
 
 [ext_resource path="res://logic/none_state.gd" type="Script" id=1]
 [ext_resource path="res://logic/state_machine.gd" type="Script" id=2]
-[ext_resource path="res://assets/sprites/gremlin_blue_down.png" type="Texture" id=3]
-[ext_resource path="res://assets/sprites/gremlin_blue_up.png" type="Texture" id=4]
-[ext_resource path="res://assets/sprites/gremlin_blue_side.png" type="Texture" id=5]
+[ext_resource path="res://sprites/gremlin_blue_down.png" type="Texture" id=3]
+[ext_resource path="res://sprites/gremlin_blue_up.png" type="Texture" id=4]
+[ext_resource path="res://sprites/gremlin_blue_side.png" type="Texture" id=5]
 [ext_resource path="res://gremlins/random_walk_state.gd" type="Script" id=6]
 [ext_resource path="res://gremlins/chase_state.gd" type="Script" id=7]
 [ext_resource path="res://gremlins/gremlin.gd" type="Script" id=8]
@@ -19,19 +19,19 @@ atlas = ExtResource( 3 )
 region = Rect2( 32, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=3]
-atlas = ExtResource( 5 )
+atlas = ExtResource( 4 )
 region = Rect2( 0, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=4]
-atlas = ExtResource( 5 )
+atlas = ExtResource( 4 )
 region = Rect2( 32, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 4 )
+atlas = ExtResource( 5 )
 region = Rect2( 0, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=6]
-atlas = ExtResource( 4 )
+atlas = ExtResource( 5 )
 region = Rect2( 32, 0, 32, 32 )
 
 [sub_resource type="SpriteFrames" id=7]
@@ -43,12 +43,12 @@ animations = [ {
 }, {
 "frames": [ SubResource( 3 ), SubResource( 4 ) ],
 "loop": true,
-"name": "move_side",
+"name": "move_up",
 "speed": 4.0
 }, {
 "frames": [ SubResource( 5 ), SubResource( 6 ) ],
 "loop": true,
-"name": "move_up",
+"name": "move_side",
 "speed": 4.0
 } ]
 
@@ -70,6 +70,8 @@ script = ExtResource( 8 )
 __meta__ = {
 "_edit_group_": true
 }
+max_health = 10
+drop_chance = 0.2
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 2 )

@@ -9,10 +9,19 @@ onready var _explode := $Sounds/Explode
 onready var _tink := $Sounds/Tink
 onready var _explode_timer := $ExplodeTimer
 
+var hit_gremlin = false
+var velocity_adjusted = false
+
 
 func _ready():
 	_explode_timer.start()
-	
+
+
+func _integrate_forces(state):
+	if hit_gremlin and not velocity_adjusted:
+		velocity_adjusted = true
+		state.linear_velocity = state.linear_velocity * 0.1
+
 
 func launch(heading: Vector2):
 	apply_impulse(Vector2.ZERO, heading * 300.0)
@@ -33,7 +42,13 @@ func _explode():
 
 
 func _on_Grenade_body_entered(body):
-	print("tink")
+	var gremlin = body as Gremlin
+	if not gremlin:
+		gremlin = body.owner as Gremlin
+	
+	if gremlin:
+		hit_gremlin = true
+		
 	_tink.play()
 
 

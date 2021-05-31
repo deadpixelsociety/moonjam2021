@@ -23,7 +23,23 @@ onready var _revolver := $Revolver
 onready var _revolver_right := $RevolverRight
 onready var _revolver_left := $RevolvedLeft
 onready var _drone_container := $DroneContainer
+onready var _sfx_grunt1 := $Sounds/Grunt1
+onready var _sfx_grunt2 := $Sounds/Grunt2
+onready var _sfx_grunt3 := $Sounds/Grunt3
+onready var _sfx_grunt4 := $Sounds/Grunt4
+onready var _sfx_grunt5 := $Sounds/Grunt5
+onready var _sfx_grunt6 := $Sounds/Grunt6
+onready var _sfx_grunt7 := $Sounds/Grunt7
 
+onready var _grunts = [
+	_sfx_grunt1,
+	_sfx_grunt2,
+	_sfx_grunt3,
+	_sfx_grunt4,
+	_sfx_grunt5,
+	_sfx_grunt6,
+	_sfx_grunt7,
+]
 
 var _move_speed = 175.0
 var _velocity = Vector2.ZERO
@@ -38,9 +54,7 @@ func _physics_process(delta):
 
 
 func _process(delta):
-	if not _health_sent:
-		_health_sent = true
-		_health_changed(max_health, max_health)
+	update_health()	
 	
 	if Input.is_action_just_pressed("consume"):
 		var drone = _drone_container.get_random_drone()
@@ -59,7 +73,11 @@ func can_attach_drone() -> bool:
 
 
 func hurt():
-	consume_health(1)
+	var sfx = _grunts[randi() % _grunts.size()]
+	if sfx:
+		sfx.play()
+		
+	consume_health(1.0)
 
 
 func _died():
@@ -73,6 +91,10 @@ func _set_max_health(value: float):
 	var old_health = _health
 	_health = value
 	_health_changed(old_health, _health)
+
+
+func update_health():
+	_health_changed(_health, _health)
 
 
 func _health_changed(old_health: float, new_health: float):
@@ -120,11 +142,22 @@ func _place_revolver():
 
 
 func _on_Hurtbox_entered(node):
-	#if not node is Gremlin or not node is Fireball:
-	#	return
-	
-	consume_health(1.0)
-
 	var gremlin = node as Gremlin
+	if not gremlin:
+		gremlin = node.owner as Gremlin	
+	
 	if gremlin:
+		if gremlin.dead:
+			return
 		gremlin.do_knockback(global_position)
+	
+	var fireball = node as Fireball
+	if not fireball:
+		fireball = node.owner as Fireball
+	
+	if fireball:
+		if fireball.dead:
+			return
+	
+	hurt()
+

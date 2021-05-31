@@ -88,7 +88,6 @@ func _shoot_bullet():
 
 
 func _on_EnemyTrigger_body_entered(body):
-	print("shoot, enter triggered")
 	if not body is Gremlin:
 		return
 	
@@ -105,7 +104,6 @@ func _on_EnemyTrigger_body_entered(body):
 
 
 func _on_EnemyTrigger_body_exited(body):
-	print("shoot, exit triggered")	
 	if not body is Gremlin:
 		return
 	

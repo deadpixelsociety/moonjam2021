@@ -1,4 +1,4 @@
-extends State
+extends PlayerActionState
 class_name PrintState
 
 export(NodePath) onready var animated_sprite = get_node(animated_sprite) as AnimatedSprite

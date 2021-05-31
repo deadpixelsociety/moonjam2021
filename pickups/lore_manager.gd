@@ -14,6 +14,12 @@ func _ready():
 	add_child(_audio_player)
 
 
+func reset():
+	lore_num = 1
+	if _audio_player and _audio_player.playing:
+		_audio_player.stop()
+
+
 func play_lore():
 	if _audio_player and _audio_player.playing:
 		_audio_player.stop()

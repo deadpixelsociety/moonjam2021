@@ -6,6 +6,7 @@ func _ready():
 	get_tree().paused = false
 	GameEvents.connect("player_died", self, "_on_player_died")
 	GameEvents.connect("player_dying", self, "_on_player_dying")
+	MusicManager.play(MusicManager.cargo)
 
 
 func _on_player_dying():

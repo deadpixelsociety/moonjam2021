@@ -7,6 +7,8 @@ onready var _state_machine := $StateMachine
 onready var _tween := $Tween
 onready var _sfx_death := $Sounds/Death
 
+var dead = false
+
 
 func charge_shot():
 	_animation_player.play("shoot")
@@ -38,10 +40,12 @@ func attach_in():
 
 
 func _on_Drone_area_entered(area):
-	kill()
+	if not dead:
+		kill()
 
 
 func kill():
+	dead = true
 	_sfx_death.play()
 	_tween.interpolate_property(
 		self,

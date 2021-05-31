@@ -3,40 +3,12 @@ class_name PlayerMotionState
 
 export(float) var move_deadzone = 0.6
 export(NodePath) onready var player = get_node(player) as Player
-export(NodePath) onready var _sfx_no_blood = get_node(_sfx_no_blood) as AudioStreamPlayer
-export(NodePath) onready var _sfx_bzzt = get_node(_sfx_bzzt) as AudioStreamPlayer
 
 var movement_axis = Vector2.ZERO
 
 
 func execute(delta: float):
 	poll_movement()
-	
-	var print_drone = false
-	var type = BloodPrinter.Drones.SINGLE_SHOT
-	
-	if Input.is_action_just_pressed("laser"):
-		print_drone = true
-		type = BloodPrinter.Drones.SINGLE_SHOT
-	elif Input.is_action_just_pressed("shotgun"):
-		print_drone = true
-		type = BloodPrinter.Drones.SHOTGUN
-	elif Input.is_action_just_pressed("grenade"):
-		print_drone = true
-		type = BloodPrinter.Drones.GRENADE
-	elif Input.is_action_just_pressed("auto"):
-		print_drone = true
-		type = BloodPrinter.Drones.AUTO_SHOT
-
-	if print_drone:
-		if player.has_health_to_print():
-			if player.can_attach_drone():
-				player.requested_drone = type
-				_request_state("print")
-			else:
-				_sfx_bzzt.play()
-		else:
-			_sfx_no_blood.play()
 
 
 func poll_movement():

@@ -6,7 +6,7 @@ export(NodePath) onready var animation_player = get_node(animation_player) as An
 export(NodePath) onready var enemy_trigger = get_node(enemy_trigger) as Area2D
 
 var _last_fire = -1
-var _shoot_delay = randf() * 0.3
+var _shoot_delay = 0.2 + randf() * 0.4
 
 
 func enter():
@@ -84,19 +84,22 @@ func _show_lazer():
 	add_child(line)
 	
 	if gremlin:
-		gremlin.hurt()
+		gremlin.hurt(1.3)
 		if gremlin.dead:
 			drone.reacquire()
 		
 	while line.points.size() > 0:
-		yield(get_tree().create_timer(0.05), "timeout")
+		var tree = get_tree()
+		if tree:
+			var timer = tree.create_timer(0.1)
+			if timer:
+				yield(timer, "timeout")
 		line.remove_point(0)
 
 	remove_child(line)
 
 
 func _on_EnemyTrigger_body_entered(body):
-	print("shoot, enter triggered")
 	if not body is Gremlin:
 		return
 	
@@ -113,7 +116,6 @@ func _on_EnemyTrigger_body_entered(body):
 
 
 func _on_EnemyTrigger_body_exited(body):
-	print("shoot, exit triggered")	
 	if not body is Gremlin:
 		return
 	

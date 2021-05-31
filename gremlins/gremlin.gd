@@ -49,9 +49,9 @@ func _spawn_pickup():
 		
 		if pickup:
 			pickup.global_position = global_position
-			var entities = get_tree().root.find_node("Objects", true, false) as YSort
-			if entities:
-				entities.call_deferred("add_child", pickup)
+			var objects = get_tree().root.find_node("Objects", true, false) as Node
+			if objects:
+				objects.call_deferred("add_child", pickup)
 
 
 func die():
