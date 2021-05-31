@@ -43,43 +43,43 @@ region = Rect2( 32, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 1 )
-region = Rect2( 0, 0, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=4]
-atlas = ExtResource( 1 )
 region = Rect2( 32, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 31 )
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 30 )
 region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 30 )
+region = Rect2( 32, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 31 )
-region = Rect2( 32, 0, 32, 32 )
+region = Rect2( 0, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=7]
-atlas = ExtResource( 30 )
-region = Rect2( 0, 0, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=8]
-atlas = ExtResource( 30 )
+atlas = ExtResource( 31 )
 region = Rect2( 32, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=9]
-atlas = ExtResource( 30 )
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 31 )
 region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 31 )
+region = Rect2( 32, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=10]
 atlas = ExtResource( 30 )
-region = Rect2( 32, 0, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=11]
-atlas = ExtResource( 31 )
 region = Rect2( 0, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=12]
-atlas = ExtResource( 31 )
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 30 )
 region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=13]
 atlas = ExtResource( 1 )
@@ -92,45 +92,45 @@ animations = [ {
 "name": "shoot_side",
 "speed": 4.0
 }, {
-"frames": [ SubResource( 3 ), SubResource( 4 ) ],
+"frames": [ ExtResource( 13 ) ],
 "loop": true,
-"name": "move_side",
-"speed": 4.0
+"name": "idle_up",
+"speed": 5.0
 }, {
-"frames": [ SubResource( 5 ), SubResource( 6 ) ],
+"frames": [ SubResource( 3 ) ],
 "loop": true,
-"name": "shoot_up",
-"speed": 4.0
+"name": "idle_side",
+"speed": 5.0
 }, {
 "frames": [ ExtResource( 14 ) ],
 "loop": true,
 "name": "idle_down",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 13 ) ],
-"loop": true,
-"name": "idle_up",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 7 ), SubResource( 8 ) ],
-"loop": true,
-"name": "shoot_down",
-"speed": 4.0
-}, {
-"frames": [ SubResource( 9 ), SubResource( 10 ) ],
+"frames": [ SubResource( 4 ), SubResource( 5 ) ],
 "loop": true,
 "name": "move_down",
 "speed": 4.0
 }, {
-"frames": [ SubResource( 11 ), SubResource( 12 ) ],
+"frames": [ SubResource( 6 ), SubResource( 7 ) ],
+"loop": true,
+"name": "shoot_up",
+"speed": 4.0
+}, {
+"frames": [ SubResource( 8 ), SubResource( 9 ) ],
 "loop": true,
 "name": "move_up",
 "speed": 4.0
 }, {
-"frames": [ SubResource( 13 ) ],
+"frames": [ SubResource( 10 ), SubResource( 11 ) ],
 "loop": true,
-"name": "idle_side",
-"speed": 5.0
+"name": "shoot_down",
+"speed": 4.0
+}, {
+"frames": [ SubResource( 12 ), SubResource( 13 ) ],
+"loop": true,
+"name": "move_side",
+"speed": 4.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=15]
@@ -255,7 +255,6 @@ height = 14.0
 pause_mode = 2
 collision_mask = 2
 script = ExtResource( 2 )
-max_health = 10
 
 [node name="CoreStateMachine" type="Node" parent="."]
 script = ExtResource( 5 )
