@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/providence-fall-synopsis.wav-09fdf722a75817fd8044cfdcb742be65.sample"
+
+[deps]
+
+source_file="res://assets/sounds/providence-fall-synopsis.wav"
+dest_files=[ "res://.import/providence-fall-synopsis.wav-09fdf722a75817fd8044cfdcb742be65.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

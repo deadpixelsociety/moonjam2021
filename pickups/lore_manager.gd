@@ -6,12 +6,18 @@ onready var _sfx_lore3 = preload("res://assets/sounds/saul_voicefile_3.wav")
 onready var _sfx_lore4 = preload("res://assets/sounds/saul_voicefile_4.wav")
 
 var lore_num = 1
+var max_lore = 4
 
 var _audio_player: AudioStreamPlayer = null
 
 func _ready():
 	_audio_player = AudioStreamPlayer.new()
+	_audio_player.volume_db = 7.0
 	add_child(_audio_player)
+
+
+func has_lore() -> bool:
+	return lore_num <= max_lore
 
 
 func reset():

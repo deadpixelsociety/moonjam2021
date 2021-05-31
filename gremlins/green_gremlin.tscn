@@ -2,9 +2,9 @@
 
 [ext_resource path="res://logic/none_state.gd" type="Script" id=1]
 [ext_resource path="res://logic/state_machine.gd" type="Script" id=2]
-[ext_resource path="res://sprites/gremlin_green_side.png" type="Texture" id=3]
-[ext_resource path="res://sprites/gremlin_green_up.png" type="Texture" id=4]
-[ext_resource path="res://sprites/gremlin_green_down.png" type="Texture" id=5]
+[ext_resource path="res://assets/sprites/gremlin_green_side.png" type="Texture" id=3]
+[ext_resource path="res://assets/sprites/gremlin_green_up.png" type="Texture" id=4]
+[ext_resource path="res://assets/sprites/gremlin_green_down.png" type="Texture" id=5]
 [ext_resource path="res://gremlins/random_walk_state.gd" type="Script" id=6]
 [ext_resource path="res://gremlins/fireball_state.gd" type="Script" id=7]
 [ext_resource path="res://gremlins/gremlin.gd" type="Script" id=8]

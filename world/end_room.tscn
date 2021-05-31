@@ -1,17 +1,170 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://ui/level_overlay.tscn" type="PackedScene" id=1]
-[ext_resource path="res://player/player.tscn" type="PackedScene" id=2]
-[ext_resource path="res://sprites/old_saul.png" type="Texture" id=3]
-[ext_resource path="res://world/game_level.gd" type="Script" id=4]
+[ext_resource path="res://assets/sprites/moonmoon.png" type="Texture" id=2]
+[ext_resource path="res://world/window.tscn" type="PackedScene" id=3]
+[ext_resource path="res://world/end_room.gd" type="Script" id=4]
 [ext_resource path="res://world/tileset_template.tres" type="TileSet" id=5]
 [ext_resource path="res://pickups/kraft_singles.tscn" type="PackedScene" id=6]
-[ext_resource path="res://pickups/audiolog.tscn" type="PackedScene" id=7]
+[ext_resource path="res://assets/sprites/space_window_ani1.png" type="Texture" id=7]
 [ext_resource path="res://world/stairs.tscn" type="PackedScene" id=8]
-[ext_resource path="res://world/random_level.tscn" type="PackedScene" id=9]
+[ext_resource path="res://ui/win_screen.tscn" type="PackedScene" id=9]
 
-[node name="StartRoom" type="Node"]
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 2 )
+region = Rect2( 52, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 2 )
+region = Rect2( 104, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 2 )
+region = Rect2( 156, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 2 )
+region = Rect2( 208, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 2 )
+region = Rect2( 260, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 2 )
+region = Rect2( 312, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 2 )
+region = Rect2( 364, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 2 )
+region = Rect2( 416, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 2 )
+region = Rect2( 468, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 2 )
+region = Rect2( 520, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 2 )
+region = Rect2( 572, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 2 )
+region = Rect2( 624, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 2 )
+region = Rect2( 676, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 2 )
+region = Rect2( 728, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 2 )
+region = Rect2( 780, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 2 )
+region = Rect2( 832, 0, 52, 22 )
+
+[sub_resource type="SpriteFrames" id=18]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ) ],
+"loop": true,
+"name": "default",
+"speed": 1.0
+} ]
+
+[sub_resource type="AtlasTexture" id=19]
+atlas = ExtResource( 7 )
+region = Rect2( 0, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=20]
+atlas = ExtResource( 7 )
+region = Rect2( 52, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=21]
+atlas = ExtResource( 7 )
+region = Rect2( 104, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=22]
+atlas = ExtResource( 7 )
+region = Rect2( 156, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=23]
+atlas = ExtResource( 7 )
+region = Rect2( 208, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=24]
+atlas = ExtResource( 7 )
+region = Rect2( 260, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=25]
+atlas = ExtResource( 7 )
+region = Rect2( 312, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=26]
+atlas = ExtResource( 7 )
+region = Rect2( 364, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=27]
+atlas = ExtResource( 7 )
+region = Rect2( 416, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=28]
+atlas = ExtResource( 7 )
+region = Rect2( 468, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=29]
+atlas = ExtResource( 7 )
+region = Rect2( 520, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=30]
+atlas = ExtResource( 7 )
+region = Rect2( 572, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=31]
+atlas = ExtResource( 7 )
+region = Rect2( 624, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=32]
+atlas = ExtResource( 7 )
+region = Rect2( 676, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=33]
+atlas = ExtResource( 7 )
+region = Rect2( 728, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=34]
+atlas = ExtResource( 7 )
+region = Rect2( 780, 0, 52, 22 )
+
+[sub_resource type="AtlasTexture" id=35]
+atlas = ExtResource( 7 )
+region = Rect2( 832, 0, 52, 22 )
+
+[sub_resource type="SpriteFrames" id=36]
+animations = [ {
+"frames": [ SubResource( 19 ), SubResource( 20 ), SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 26 ), SubResource( 27 ), SubResource( 28 ), SubResource( 29 ), SubResource( 30 ), SubResource( 31 ), SubResource( 32 ), SubResource( 33 ), SubResource( 34 ), SubResource( 35 ) ],
+"loop": true,
+"name": "default",
+"speed": 1.0
+} ]
+
+[node name="EndRoom" type="Node"]
 script = ExtResource( 4 )
+player_spawn = NodePath("Objects/PlayerSpawn")
 
 [node name="LevelOverlay" parent="." instance=ExtResource( 1 )]
 
@@ -22,25 +175,137 @@ cell_custom_transform = Transform2D( 128, 0, 0, 128, 0, 0 )
 collision_layer = 2
 collision_mask = 513
 format = 1
-tile_data = PoolIntArray( 0, 0, 8, 1, 0, 11, 6, 0, 196608, 65536, 0, 65544, 65537, 0, 131083, 131072, 0, 65544, 131073, 0, 65542, 131074, 0, 11, 196608, 0, 196616, 196609, 0, 196617, 196610, 0, 196619 )
+tile_data = PoolIntArray( 0, 0, 8, 1, 0, 10, 2, 0, 10, 3, 0, 10, 4, 0, 11, 65536, 0, 196616, 65537, 0, 196617, 65538, 0, 196617, 65539, 0, 196617, 65540, 0, 196619 )
 
 [node name="Objects" type="Node" parent="."]
 
 [node name="Stairs" parent="Objects" instance=ExtResource( 8 )]
-position = Vector2( 320, 448 )
+position = Vector2( 309, 142 )
 next_level = ExtResource( 9 )
 
-[node name="KraftSingles" parent="Objects" instance=ExtResource( 6 )]
-position = Vector2( 300, 338 )
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Objects"]
+position = Vector2( 256, 48 )
+frames = SubResource( 18 )
 
-[node name="AudioLog" parent="Objects" instance=ExtResource( 7 )]
-position = Vector2( 320, 388 )
+[node name="AnimatedSprite2" type="AnimatedSprite" parent="Objects"]
+position = Vector2( 383, 48 )
+frames = SubResource( 36 )
+
+[node name="Window" parent="Objects" instance=ExtResource( 3 )]
+position = Vector2( 257, 52 )
+
+[node name="Window2" parent="Objects" instance=ExtResource( 3 )]
+position = Vector2( 384, 52 )
+
+[node name="KraftSingles" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 69, 110 )
+
+[node name="KraftSingles2" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 77, 102 )
+
+[node name="KraftSingles3" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 68, 103 )
+
+[node name="KraftSingles4" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 68, 118 )
+
+[node name="KraftSingles5" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 78, 111 )
+
+[node name="KraftSingles32" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 139, 151 )
+
+[node name="KraftSingles33" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 147, 143 )
+
+[node name="KraftSingles34" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 138, 144 )
+
+[node name="KraftSingles35" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 138, 159 )
+
+[node name="KraftSingles36" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 148, 152 )
+
+[node name="KraftSingles21" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 61, 167 )
+
+[node name="KraftSingles22" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 562, 120 )
+
+[node name="KraftSingles23" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 563, 179 )
+
+[node name="KraftSingles27" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 491, 137 )
+
+[node name="KraftSingles29" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 483, 193 )
+
+[node name="KraftSingles30" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 519, 175 )
+
+[node name="KraftSingles31" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 520, 150 )
+
+[node name="KraftSingles24" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 554, 150 )
+
+[node name="KraftSingles28" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 455, 129 )
+
+[node name="KraftSingles25" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 527, 105 )
+
+[node name="KraftSingles26" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 527, 105 )
+
+[node name="KraftSingles6" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 173, 104 )
+
+[node name="KraftSingles7" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 174, 112 )
+
+[node name="KraftSingles8" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 225, 102 )
+
+[node name="KraftSingles9" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 221, 113 )
+
+[node name="KraftSingles10" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 221, 113 )
+
+[node name="KraftSingles11" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 261, 201 )
+
+[node name="KraftSingles12" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 330, 94 )
+
+[node name="KraftSingles13" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 229, 187 )
+
+[node name="KraftSingles14" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 382, 142 )
+
+[node name="KraftSingles15" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 253, 137 )
+
+[node name="KraftSingles16" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 365, 195 )
+
+[node name="KraftSingles17" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 400, 166 )
+
+[node name="KraftSingles18" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 417, 193 )
+
+[node name="KraftSingles19" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 413, 204 )
+
+[node name="KraftSingles20" parent="Objects" instance=ExtResource( 6 )]
+position = Vector2( 414, 102 )
+
+[node name="PlayerSpawn" type="Node2D" parent="Objects"]
+position = Vector2( 100, 168 )
 
 [node name="Entities" type="YSort" parent="."]
-
-[node name="Player" parent="Entities" instance=ExtResource( 2 )]
-position = Vector2( 130, 114 )
-
-[node name="OldSaul" type="Sprite" parent="Entities"]
-position = Vector2( 329, 329 )
-texture = ExtResource( 3 )

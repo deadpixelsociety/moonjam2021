@@ -59,6 +59,7 @@ func _process(delta):
 	if Input.is_action_just_pressed("consume"):
 		var drone = _drone_container.get_random_drone()
 		if drone:
+			drone.consumed = true
 			consume_health(-1.0)
 			drone.call_deferred("kill")
 	

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/oh_shit_i_won.wav-bce4f88f98b644ab70c25d3dbc0c828d.sample"
+
+[deps]
+
+source_file="res://assets/sounds/oh_shit_i_won.wav"
+dest_files=[ "res://.import/oh_shit_i_won.wav-bce4f88f98b644ab70c25d3dbc0c828d.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

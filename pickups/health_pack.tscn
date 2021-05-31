@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://sprites/healthpack.png" type="Texture" id=1]
+[ext_resource path="res://assets/sprites/healthpack.png" type="Texture" id=1]
 [ext_resource path="res://pickups/health_pack.gd" type="Script" id=2]
 [ext_resource path="res://assets/sounds/health_pickup.wav" type="AudioStream" id=3]
 

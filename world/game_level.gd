@@ -4,13 +4,13 @@ class_name GameLevel
 
 func _ready():
 	get_tree().paused = false
+	MusicManager.play()
 	GameEvents.connect("player_died", self, "_on_player_died")
 	GameEvents.connect("player_dying", self, "_on_player_dying")
-	MusicManager.play(MusicManager.cargo)
 
 
 func _on_player_dying():
 	get_tree().paused = true
 
 func _on_player_died():
-	get_tree().change_scene("res://world/game_level.tscn")
+	get_tree().change_scene("res://ui/death_screen.tscn")

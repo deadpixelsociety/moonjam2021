@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://sprites/audiolog.png" type="Texture" id=1]
+[ext_resource path="res://assets/sprites/audiolog.png" type="Texture" id=1]
 [ext_resource path="res://pickups/audiolog.gd" type="Script" id=2]
 [ext_resource path="res://assets/sounds/audio-pickup.wav" type="AudioStream" id=3]
 

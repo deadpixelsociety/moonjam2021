@@ -15,9 +15,13 @@ script = ExtResource( 2 )
 gremlin_coverage = 0.3
 room_count = 25
 max_separation_iterations = 200
-key_room_percentage = 0.3
+key_room_percentage = 0.35
 generate = true
 tile_map = NodePath("../TileMap")
+_spawn_point = NodePath("../Objects/PlayerSpawn")
+_stairs_point = NodePath("../Objects/StairsSpawn")
+_entities = NodePath("../Entities")
+_objects = NodePath("../Objects")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 5 )

@@ -20,6 +20,10 @@ export(bool) var draw_triangulation = false
 export(bool) var draw_mst = false
 export(bool) var draw_hallways = false
 export(NodePath) var tile_map
+export(NodePath) onready var _spawn_point = get_node(_spawn_point) as Node2D
+export(NodePath) onready var _stairs_point = get_node(_stairs_point) as Node2D
+export(NodePath) onready var _entities = get_node(_entities) as YSort
+export(NodePath) onready var _objects = get_node(_objects) as Node
 
 var _spawn_radius = 25.0
 var _room_cells = []
@@ -114,6 +118,8 @@ var _gremlins = [
 	load("res://gremlins/pink_gremlin.tscn"),
 ]
 
+var audio_log = load("res://pickups/audiolog.tscn") as PackedScene
+
 onready var _tile_map := get_node(tile_map) as TileMap
 
 
@@ -186,8 +192,7 @@ func _spawn_gremlins():
 	if gremlin_count == 0:
 		return
 
-	var entities = owner.find_node("Entities", true, false) as YSort
-	if not entities:
+	if not _entities:
 		return
 		
 	for i in range(gremlin_count):
@@ -196,7 +201,7 @@ func _spawn_gremlins():
 		var gremlin_type = _gremlins[randi() % _gremlins.size()] as PackedScene
 		var gremlin = gremlin_type.instance() as Gremlin
 		gremlin.global_position = pos
-		entities.add_child(gremlin)
+		_entities.add_child(gremlin)
 
 
 func _sort_nodes(a: Vector2, b: Vector2) -> bool:
@@ -217,12 +222,9 @@ func _reset():
 	for child in get_children():
 		child.queue_free()
 	
-	if owner:
-		var entities = owner.find_node("Entities", true, false) as YSort
-		if entities:
-			for child in entities.get_children():
-				child.queue_free()
-
+	if _entities:
+		for child in _entities.get_children():
+			child.queue_free()
 
 
 func _create_cells(num_rooms: int):
@@ -542,16 +544,21 @@ func _render_chunks():
 		var x = floor(room_cell.bounds.position.x)
 		var y = floor(room_cell.bounds.position.y)
 
-		var _spawn_point: Node2D = null
 		if first_room and player_spawn:
-			_spawn_point = owner.find_node("PlayerSpawn", true, false) as Node2D
-			if _spawn_point:			
+			if _spawn_point:
 				_spawn_point.global_position = Vector2(x * tileX, y * tileY) + player_spawn.global_position
 
 		if last_room and stairs_spawn:
-			var _stairs_point = owner.find_node("StairsSpawn", true, false) as Node2D
 			if _stairs_point:
 				_stairs_point.global_position = Vector2(x * tileX, y * tileY) + stairs_spawn.global_position
+		
+		if first_room and _spawn_point and LoreManager.has_lore():
+			var angle = (2.0 * PI) * randf()
+			var dir = Vector2(1.0, 0.0).rotated(angle) * 60.0
+			var audiolog: AudioLog = audio_log.instance() as AudioLog
+			_objects.add_child(audiolog)
+			audiolog.global_position = _spawn_point.global_position + dir
+		
 		
 		for i in range(x, x + floor(room_cell.bounds.size.x)):
 			for j in range(y + floor(room_cell.bounds.size.y), y - 1, -1):

@@ -6,6 +6,7 @@ signal attach_in_finished
 signal attach_out_finished
 
 var target: Node2D = null
+var consumed = false
 
 var _targets = []
 

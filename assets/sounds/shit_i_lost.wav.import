@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/shit_i_lost.wav-09d8184fe2d31efddd097d3dcd18cd9f.sample"
+
+[deps]
+
+source_file="res://assets/sounds/shit_i_lost.wav"
+dest_files=[ "res://.import/shit_i_lost.wav-09d8184fe2d31efddd097d3dcd18cd9f.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

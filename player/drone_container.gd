@@ -30,7 +30,7 @@ func get_random_drone() -> Drone:
 	for child in get_children():
 		if child is DroneAttachment:
 			var drone = child.get_attached_drone() as Drone
-			if drone:
+			if drone and not drone.consumed:
 				drones.push_back(drone)
 
 	if drones.size() == 0:

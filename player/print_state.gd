@@ -8,6 +8,8 @@ var drone_selection = 0
 
 
 func enter():
+	if blood_printer.is_connected("print_finished", self, "_on_print_finished"):
+		blood_printer.disconnect("print_finished", self, "_on_print_finished")
 	blood_printer.connect("print_finished", self, "_on_print_finished")
 
 
@@ -21,7 +23,8 @@ func execute(delta: float):
 
 
 func exit():
-	blood_printer.disconnect("print_finished", self, "_on_print_finished")
+	if blood_printer.is_connected("print_finished", self, "_on_print_finished"):
+		blood_printer.disconnect("print_finished", self, "_on_print_finished")
 
 
 func _on_print_finished():

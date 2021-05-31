@@ -11,5 +11,9 @@ func _on_Stairs_body_entered(body):
 	
 	disconnect("body_entered", self, "_on_Stairs_body_entered")
 	
-	PlayerStorage.set_player(player)
+	if LevelManager.current_level <= 4:
+		PlayerStorage.set_player(player)
+		LevelManager.current_level += 1
+	else:
+		PlayerStorage.clear_player()
 	get_tree().change_scene_to(next_level)

@@ -2,21 +2,24 @@ extends Node
 
 var _music: AudioStreamPlayer = null
 
-onready var cargo = preload("res://assets/music/cargo.mp3")
-onready var amplify = preload("res://assets/music/amplify.mp3")
+onready var _songs = [
+	load("res://assets/music/cargo.mp3"), 
+	load("res://assets/music/amplify.mp3")
+]
 
+var index = 0
 
 func _ready():
 	_music = AudioStreamPlayer.new()
 	add_child(_music)
 
 
-func play(song):
-	if not _music or _music.stream == song:
-		return
+func play():
 	stop()
-	_music.stream = song
+	_music.stream = _songs[index]
 	_music.play()
+	index += 1
+	index %= 2
 
 
 func stop():

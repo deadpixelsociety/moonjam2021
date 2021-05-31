@@ -30,7 +30,9 @@ func _on_Volume_value_changed(value: float):
 
 
 func _on_About_pressed():	
+	$Huh.play()
 	_about.popup()
+	yield(get_tree().create_timer(0.5), "timeout")
 	_synopsis.play()
 
 
