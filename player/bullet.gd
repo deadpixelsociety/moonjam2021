@@ -3,16 +3,13 @@ class_name Bullet
 
 const MOVE_SPEED = 300.0
 
-var _heading = Vector2.ZERO
+export(float) var damage = 1.0
 
-onready var _visibility_notifier := $VisibilityNotifier2D
+var _heading = Vector2.ZERO
 
 func _physics_process(delta):
 	var velocity = _heading * MOVE_SPEED * delta
 	position += velocity 
-	
-	if not _visibility_notifier.is_on_screen():
-		queue_free()
 
 
 func fire(heading: Vector2):

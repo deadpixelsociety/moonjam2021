@@ -47,6 +47,8 @@ func _process_state(delta: float, state: State):
 
 
 func get_current_state() -> State:
+	if _state_stack.size() == 0:
+		return null		
 	return _state_stack.back()
 
 

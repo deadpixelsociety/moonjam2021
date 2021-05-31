@@ -23,3 +23,17 @@ func get_free_attachment() -> DroneAttachment:
 		return null
 						
 	return attachments[randi() % attachments.size()] as DroneAttachment
+
+
+func get_random_drone() -> Drone:
+	var drones = []
+	for child in get_children():
+		if child is DroneAttachment:
+			var drone = child.get_attached_drone() as Drone
+			if drone:
+				drones.push_back(drone)
+
+	if drones.size() == 0:
+		return null
+	
+	return drones[randi() % drones.size()] as Drone

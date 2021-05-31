@@ -18,7 +18,6 @@ export(bool) var draw_triangulation = true
 export(bool) var draw_mst = true
 export(bool) var draw_hallways = true
 export(NodePath) var tile_map
-export(NodePath) var player
 
 var _spawn_radius = 25.0
 var _room_cells = []
@@ -103,7 +102,6 @@ var _room_chunks = {
 }
 
 onready var _tile_map := get_node(tile_map) as TileMap
-onready var _player := get_node(player) as Player
 
 
 class RoomCell:
@@ -138,7 +136,7 @@ class Edge:
 	var end = Vector2.ZERO
 
 
-func _ready():
+func generate_dungeon():
 	generate(room_count)
 
 
@@ -465,9 +463,12 @@ func _render_tiles():
 
 
 func _render_chunks():
-	var first_cell = true
-	for _room_cell in _key_rooms:
-		var room_cell = _room_cell as RoomCell
+	for z in range(_key_rooms.size()):
+		var first_room = z == 0
+		var second_room = z == 1
+		var last_room = z == _key_rooms.size() - 1
+		
+		var room_cell = _key_rooms[z] as RoomCell
 		var chunks = _room_chunks.get(room_cell.size, []) as Array
 		
 		var chunk = null
@@ -478,16 +479,24 @@ func _render_chunks():
 		
 		var chunk_map: TileMap = null
 		var player_spawn: Node2D = null
+		var stairs_spawn: Node2D = null
 		if chunk:
-			chunk_map = chunk.get_node("TileMap") as TileMap
-			player_spawn = chunk.get_node("PlayerSpawn") as Node2D
+			chunk_map = chunk.find_node("TileMap") as TileMap
+			player_spawn = chunk.find_node("PlayerSpawn") as Node2D
+			stairs_spawn = chunk.find_node("StairsSpawn") as Node2D
 			
 		var x = floor(room_cell.bounds.position.x)
 		var y = floor(room_cell.bounds.position.y)
 
-		if first_cell and player_spawn:
-			first_cell = false
-			_player.position = Vector2(x * _tile_map.cell_size.x, y * _tile_map.cell_size.y) + player_spawn.position
+		if first_room and player_spawn:
+			var _spawn_point = owner.find_node("PlayerSpawn", true, false) as Node2D
+			if _spawn_point:			
+				_spawn_point.position = Vector2(x * _tile_map.cell_size.x, y * _tile_map.cell_size.y) + player_spawn.position
+
+		if last_room and stairs_spawn:
+			var _stairs_point = owner.find_node("StairsSpawn", true, false) as Node2D
+			if _stairs_point:
+				_stairs_point.position = Vector2(x * _tile_map.cell_size.x, y * _tile_map.cell_size.y) + stairs_spawn.position	
 		
 		for i in range(x, x + floor(room_cell.bounds.size.x)):
 			for j in range(y + floor(room_cell.bounds.size.y), y - 1, -1):

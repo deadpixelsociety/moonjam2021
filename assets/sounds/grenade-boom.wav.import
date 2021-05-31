@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/grenade-boom.wav-690b8be616a0e7098ffd4aaa547172ea.sample"
+
+[deps]
+
+source_file="res://assets/sounds/grenade-boom.wav"
+dest_files=[ "res://.import/grenade-boom.wav-690b8be616a0e7098ffd4aaa547172ea.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

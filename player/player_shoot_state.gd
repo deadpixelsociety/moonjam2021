@@ -6,6 +6,7 @@ export(PackedScene) var Bullet
 export(NodePath) onready var animated_sprite = get_node(animated_sprite) as AnimatedSprite
 export(NodePath) onready var shoot_origin = get_node(shoot_origin) as Node2D
 export(NodePath) onready var revolver = get_node(revolver) as Sprite
+export(NodePath) onready var sfx = get_node(sfx) as AudioStreamPlayer
 
 var _last_fire = -1
 var _last_heading = Vector2.ZERO
@@ -42,10 +43,13 @@ func _shoot():
 			revolver.rotation = player.heading.angle()
 
 		if _last_heading != player.heading and player.shooting:
-			animated_sprite.play("shoot" + _get_animation_affix())			
 			_last_heading = player.heading
 
+		if sfx and not sfx.playing:
+			sfx.play()
+			
 		bullet.fire(shoot_axis)
 		
-		if player.owner:
-			player.owner.add_child(bullet)
+		var entities = get_tree().root.find_node("Entities", true, false) as YSort
+		if entities:
+			entities.add_child(bullet)

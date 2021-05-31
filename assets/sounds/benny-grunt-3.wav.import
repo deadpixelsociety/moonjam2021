@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/benny-grunt-3.wav-3607922c18a1e286d1a3b366c48a4400.sample"
+
+[deps]
+
+source_file="res://assets/sounds/benny-grunt-3.wav"
+dest_files=[ "res://.import/benny-grunt-3.wav-3607922c18a1e286d1a3b366c48a4400.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -1,0 +1,142 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://logic/none_state.gd" type="Script" id=1]
+[ext_resource path="res://logic/state_machine.gd" type="Script" id=2]
+[ext_resource path="res://assets/sprites/gremlin_blue_down.png" type="Texture" id=3]
+[ext_resource path="res://assets/sprites/gremlin_blue_up.png" type="Texture" id=4]
+[ext_resource path="res://assets/sprites/gremlin_blue_side.png" type="Texture" id=5]
+[ext_resource path="res://gremlins/random_walk_state.gd" type="Script" id=6]
+[ext_resource path="res://gremlins/chase_state.gd" type="Script" id=7]
+[ext_resource path="res://gremlins/gremlin.gd" type="Script" id=8]
+[ext_resource path="res://gremlins/knockback_state.gd" type="Script" id=9]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 3 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 5 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 4 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=7]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ) ],
+"loop": true,
+"name": "move_down",
+"speed": 4.0
+}, {
+"frames": [ SubResource( 3 ), SubResource( 4 ) ],
+"loop": true,
+"name": "move_side",
+"speed": 4.0
+}, {
+"frames": [ SubResource( 5 ), SubResource( 6 ) ],
+"loop": true,
+"name": "move_up",
+"speed": 4.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=8]
+radius = 11.0
+height = 4.0
+
+[sub_resource type="CircleShape2D" id=9]
+radius = 275.0
+
+[sub_resource type="CapsuleShape2D" id=10]
+radius = 13.0
+height = 0.0
+
+[node name="BlueGremlin" type="KinematicBody2D"]
+collision_layer = 8
+collision_mask = 10
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource( 2 )
+default_state = NodePath("RandomWalkState")
+
+[node name="NoneState" type="Node" parent="StateMachine"]
+script = ExtResource( 1 )
+state_name = "none"
+
+[node name="RandomWalkState" type="Node" parent="StateMachine"]
+script = ExtResource( 6 )
+state_name = "move"
+processing_mode = 1
+move_speed = 75.0
+max_speed = 200.0
+animated_sprite = NodePath("../../AnimatedSprite")
+benny_trigger = NodePath("../../BennyTrigger")
+body = NodePath("../..")
+
+[node name="Timer" type="Timer" parent="StateMachine/RandomWalkState"]
+wait_time = 2.0
+autostart = true
+
+[node name="ChaseState" type="Node" parent="StateMachine"]
+script = ExtResource( 7 )
+state_name = "attack"
+processing_mode = 1
+animated_sprite = NodePath("../../AnimatedSprite")
+
+[node name="KnockbackState" type="Node" parent="StateMachine"]
+script = ExtResource( 9 )
+state_name = "knockback"
+processing_mode = 1
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 7 )
+animation = "move_side"
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 3 )
+shape = SubResource( 8 )
+
+[node name="BennyTrigger" type="Area2D" parent="."]
+collision_layer = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BennyTrigger"]
+visible = false
+shape = SubResource( 9 )
+
+[node name="FireballOrigin" type="Node2D" parent="."]
+
+[node name="Hurtbox" type="Area2D" parent="."]
+visible = false
+collision_layer = 128
+collision_mask = 772
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2( 0, 2 )
+shape = SubResource( 10 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+
+[connection signal="timeout" from="StateMachine/RandomWalkState/Timer" to="StateMachine/RandomWalkState" method="_on_Timer_timeout"]
+[connection signal="body_entered" from="BennyTrigger" to="StateMachine/RandomWalkState" method="_on_BennyTrigger_body_entered"]
+[connection signal="body_exited" from="BennyTrigger" to="StateMachine/ChaseState" method="_on_BennyTrigger_body_exited"]
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
+[connection signal="body_entered" from="Hurtbox" to="." method="_on_Hurtbox_body_entered"]

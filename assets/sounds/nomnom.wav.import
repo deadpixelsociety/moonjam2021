@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/nomnom.wav-cf9c20474f32dbaabe08c53713608e95.sample"
+
+[deps]
+
+source_file="res://assets/sounds/nomnom.wav"
+dest_files=[ "res://.import/nomnom.wav-cf9c20474f32dbaabe08c53713608e95.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

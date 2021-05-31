@@ -18,7 +18,6 @@ func attach_drone(drone: Drone):
 	if container:
 		container.spinning = false
 	
-	drone.set_process(false)
 	attached = true
 	drone.attach_out()
 	yield(drone, "attach_out_finished")
@@ -27,7 +26,6 @@ func attach_drone(drone: Drone):
 	drone.attach_in()
 	yield(drone, "attach_in_finished")
 	emit_signal("attachment_completed")
-	drone.set_process(true)
 
 	if container:
 		container.spinning = true

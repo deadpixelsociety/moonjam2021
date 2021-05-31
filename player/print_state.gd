@@ -8,11 +8,15 @@ var drone_selection = 0
 
 
 func enter():
-	animated_sprite.play("printing")
 	blood_printer.connect("print_finished", self, "_on_print_finished")
 
 
 func execute(delta: float):
+	var player = owner as Player
+	if not player:
+		return
+	
+	blood_printer.selected_drone = player.requested_drone
 	blood_printer.print_drone()
 
 

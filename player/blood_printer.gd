@@ -3,13 +3,16 @@ class_name BloodPrinter
 
 signal print_finished
 
-enum Drones {SINGLE_SHOT}
+enum Drones {SINGLE_SHOT, AUTO_SHOT, GRENADE, SHOTGUN}
 
 export(Drones) var selected_drone := Drones.SINGLE_SHOT
 export(NodePath) onready var drone_container = get_node(drone_container) as DroneContainer
 
 var _drone_map = {
 	Drones.SINGLE_SHOT : load("res://player/drones/single_shot_drone.tscn"),
+	Drones.AUTO_SHOT : load("res://player/drones/auto_shot_drone.tscn"),
+	Drones.GRENADE : load("res://player/drones/grenade_drone.tscn"),
+	Drones.SHOTGUN : load("res://player/drones/shotgun_drone.tscn"),
 }
 
 onready var _animation_player := $AnimationPlayer

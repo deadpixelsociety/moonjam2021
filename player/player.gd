@@ -7,15 +7,16 @@ signal health_changed
 export(int) var max_health = 5 setget _set_max_health
 
 var heading = Vector2(1.0, 0.0) setget _set_heading, _get_heading
-var path = PoolVector2Array()
+var knockback = Vector2.ZERO
 var shooting = false
 var moving = false
+var requested_drone = null
 
 var _health = 5
 
 onready var _animated_sprite := $AnimatedSprite
 onready var _collision := $CollisionShape2D
-onready var _bullet_spawn := $BulletSpawn
+onready var _bullet_spawn := $Revolver/BulletSpawn
 onready var _core_state_machine := $CoreStateMachine
 onready var _action_state_machine := $ActionStateMachine
 onready var _revolver := $Revolver
@@ -23,62 +24,48 @@ onready var _revolver_right := $RevolverRight
 onready var _revolver_left := $RevolvedLeft
 onready var _drone_container := $DroneContainer
 
+
 var _move_speed = 175.0
 var _velocity = Vector2.ZERO
+var _health_sent = false
 
 
-func _physics_process(delta):
-	if path.size() > 0:
-		_move_along_path(delta)
-		
+func _physics_process(delta):		
 	if abs(heading.y) > abs(heading.x) and heading.y < 0.0:
 		_revolver.z_index = -1
 	else:
 		_revolver.z_index = 0
 
 
-func _move_along_path(delta: float):
-	var current = position
-	var target = path[0]
-
-	var distance = current.distance_to(target)
-	
-	if distance <= 0.01:
-		position = target
-		path.remove(0)
-		return
-		
-	var dir = (target - current).normalized()
-
-	_velocity = dir * _move_speed
-	
-	var distance_will_travel = (_velocity * delta).length()
-
-	if distance_will_travel <= distance and distance_will_travel > 0.0:
-		move_and_slide(_velocity)
-	else:
-		path.remove(0)
-	#elif distance_will_travel > distance and distance_will_travel > 0.0:
-	#	path.remove(0)
-	#elif distance_will_travel <= 0.0:
-	#	path.remove(0)
-
-
 func _process(delta):
-	pass
+	if not _health_sent:
+		_health_sent = true
+		_health_changed(max_health, max_health)
+	
+	if Input.is_action_just_pressed("consume"):
+		var drone = _drone_container.get_random_drone()
+		if drone:
+			consume_health(-1.0)
+			drone.call_deferred("kill")
+	
+
+func has_health_to_print() -> bool:
+	return _health > 1
 
 
 func can_attach_drone() -> bool:
-	if _health <= 1:
-		return false
-		
 	var attachment = _drone_container.get_free_attachment()
 	return attachment != null
 
 
+func hurt():
+	consume_health(1)
+
+
 func _died():
-	_core_state_machine.swap_state("death")
-	emit_signal("died")
+	_core_state_machine._on_state_finished("death")
+	_action_state_machine.set_physics_process(false)
+	_action_state_machine.set_process(false)
 
 
 func _set_max_health(value: float):
@@ -89,12 +76,17 @@ func _set_max_health(value: float):
 
 
 func _health_changed(old_health: float, new_health: float):
+	GameEvents.emit_signal("health_changed", int(new_health))
 	emit_signal("health_changed", old_health, new_health)
+
+
+func can_gain_health() -> bool:
+	return _health < max_health
 
 
 func consume_health(amount: float):
 	var old_health = _health
-	_health = max(_health - amount, 0.0)
+	_health = min(max(_health - amount, 0.0), max_health)
 	_health_changed(old_health, _health)
 
 	if _health <= 0.0:
@@ -125,3 +117,14 @@ func _place_revolver():
 			_revolver.position = _revolver_left.position
 		else:
 			_revolver.position = _revolver_right.position
+
+
+func _on_Hurtbox_entered(node):
+	#if not node is Gremlin or not node is Fireball:
+	#	return
+	
+	consume_health(1.0)
+
+	var gremlin = node as Gremlin
+	if gremlin:
+		gremlin.do_knockback(global_position)

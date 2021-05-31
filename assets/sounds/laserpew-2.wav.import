@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/laserpew-2.wav-46c5184c6ad80463278e0d546c3bdbf5.sample"
+
+[deps]
+
+source_file="res://assets/sounds/laserpew-2.wav"
+dest_files=[ "res://.import/laserpew-2.wav-46c5184c6ad80463278e0d546c3bdbf5.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

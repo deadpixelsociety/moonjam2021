@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/rapidshot.wav-609e6ccb8984494e0dad681f52a4ad81.sample"
+
+[deps]
+
+source_file="res://assets/sounds/rapidshot.wav"
+dest_files=[ "res://.import/rapidshot.wav-609e6ccb8984494e0dad681f52a4ad81.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
