@@ -14,6 +14,7 @@ func _on_LostTimer_timeout():
 
 
 func _on_RetryGame_pressed():
+	LevelManager.current_level = 0
 	_lost.stop()
 	$MenuMusic.stop()
 	get_tree().change_scene("res://world/start_room.tscn")

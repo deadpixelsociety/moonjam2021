@@ -16,6 +16,7 @@ func _on_QuitGame_pressed():
 
 
 func _on_PlayGame_pressed():
+	LevelManager.current_level = 0
 	_music.stop()
 	get_tree().change_scene("res://world/start_room.tscn")
 
@@ -29,7 +30,7 @@ func _on_Volume_value_changed(value: float):
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), linear2db(nrg))
 
 
-func _on_About_pressed():	
+func _on_About_pressed():
 	$Huh.play()
 	_about.popup()
 	yield(get_tree().create_timer(0.5), "timeout")
